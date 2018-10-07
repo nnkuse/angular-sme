@@ -1,0 +1,21 @@
+<div fxFlex="1 0 auto" *ngIf="!formActive" class="list-header-name">
+    {{list.in_date}}
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onFormSubmit()"
+      class="list-header-name-form" fxLayoutAlign="start center" fxFlex="1 0 auto"
+      *ngIf="formActive">
+
+    <mat-form-field>
+        <input matInput formControlName="in_date" #dateInput class="form-control" [matDatepicker]="picker" placeholder="แก้ไขวัน">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker disabled="false"></mat-datepicker>
+    </mat-form-field>
+
+    <button mat-icon-button fxFlex="0 1 auto">
+        <mat-icon>check</mat-icon>
+    </button>
+    <button mat-icon-button fxFlex="0 1 auto" (click)="closeForm()" type="button">
+        <mat-icon>close</mat-icon>
+    </button>
+</form>

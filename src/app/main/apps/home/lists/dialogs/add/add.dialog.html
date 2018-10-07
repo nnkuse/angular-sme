@@ -1,0 +1,49 @@
+<div class="container add-dialog">
+  <h3 mat-dialog-title>เพิ่มรายการ</h3>
+
+  <form (ngSubmit)="submit" #formControl="ngForm">
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="รายการ" [(ngModel)]="data.list_name" name="list_name"
+          required>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="ชื่อหน่วยงาน" [(ngModel)]="data.agency" name="agency"
+          required>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-picker-container">
+      <div class="form-picker1">
+        <mat-form-field>
+          <input matInput #input class="form-control" [matDatepicker]="picker1" placeholder="ตั้งแต่วันที่" [(ngModel)]="data.start_date"
+            name="start_date" required>
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-picker2">
+        <mat-form-field>
+          <input matInput #input class="form-control" [matDatepicker]="picker2" placeholder="ถึงวันที่" [(ngModel)]="data.end_date"
+            name="end_date" required>
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div mat-dialog-actions>
+      <button mat-button [type]="submit" [disabled]="!formControl.valid" (click)="confirmAdd()">เพิ่ม</button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">ยกเลิก</button>
+    </div>
+  </form>
+</div>

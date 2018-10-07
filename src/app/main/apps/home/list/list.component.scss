@@ -1,0 +1,56 @@
+ @import "src/@fuse/scss/fuse";
+ #list {
+     >.center {
+         padding: 24px;
+         padding-top: 0px;
+         .header {
+             .subtitle {
+                 margin: 6px 0 0 0;
+             }
+         }
+     }
+     .button-event {
+         width: 100px;
+     }
+     .content {
+         .mat-tab-group,
+         .mat-tab-body-wrapper,
+         .tab-content {
+             flex: 1 1 auto;
+             max-width: 100%;
+         }
+         .mat-tab-body-content {
+             display: flex;
+         }
+         .mat-tab-label {
+             height: 64px;
+         }
+     }
+     .content-card {
+         .board-content-wrapper {
+             position: relative;
+             background: #E5E7E8;
+             .board-content {
+                 position: absolute;
+                 top: 0;
+                 right: 0;
+                 bottom: 0;
+                 left: 0;
+                 height: 100%;
+                 overflow-y: hidden;
+                 overflow-x: auto;
+                 -webkit-overflow-scrolling: touch;
+                 .list-sortable-placeholder {
+                     background: rgba(0, 0, 0, 0.06);
+                     margin-right: 24px;
+                 }
+                 .new-list-wrapper {
+                     width: 344px;
+                     min-width: 344px;
+                     max-width: 344px;
+                     padding-right: 24px;
+                 }
+             }
+         }
+     }
+ }

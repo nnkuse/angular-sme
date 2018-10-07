@@ -1,0 +1,28 @@
+<div class="list new-list mat-elevation-z1">
+
+    <button *ngIf="!formActive" mat-button class="new-list-form-button" (click)="openForm()">
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon class="mat-red-bg">add</mat-icon>
+            <span>เพิ่มวัน</span>
+        </div>
+    </button>
+
+    <form *ngIf="formActive" class="new-list-form" [formGroup]="form" (submit)="onFormSubmit()"
+          fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+        <mat-form-field>
+            <input matInput formControlName="in_date" #dateInput class="form-control" 
+            [matDatepicker]="picker" placeholder="เพิ่มวัน">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker disabled="false"></mat-datepicker>
+        </mat-form-field>
+
+        <button mat-icon-button fxFlex="0 1 auto">
+            <mat-icon>check</mat-icon>
+        </button>
+        <button mat-icon-button fxFlex="0 1 auto" (click)="closeForm()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </form>
+</div>
+

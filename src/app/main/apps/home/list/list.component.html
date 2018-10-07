@@ -1,0 +1,78 @@
+<div id="list" class="page-layout carded fullwidth inner-scroll">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header mat-accent-bg" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+
+        <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/apps/sme/lists'">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          <div class="h2">
+            {{list.list_name}}
+          </div>
+          <div class="subtitle secondary-text">
+            <span>{{list.agency}}</span>
+          </div>
+        </div>
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- BUTTON -->
+      <div class="button-event" fxLayout="row" fxLayoutAlign="space-between center">
+
+        <button mat-mini-fab class="mat-green-600-bg" matTooltip="แก้ไขรายการ" matTooltipPosition="above" (click)="editList()">
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button mat-mini-fab class="mat-red-bg" matTooltip="ลบรายการ" matTooltipPosition="above" (click)="removeList()">
+          <mat-icon>delete</mat-icon>
+        </button>
+        
+      </div>
+      <!-- /BUTTON -->
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg">
+
+      <div fxFlex class="board-content-wrapper p-16 p-mat-24 mat-white-bg">
+      
+        <!-- BOARD -->
+        <div class="board-content ngx-dnd-container p-16 p-mat-24" fxLayoutAlign="start start" fxFlex="1 0 auto" fxLayout="row wrap"  
+          ngxDroppable="list" 
+          [@animateStagger]="{value:'50'}">
+        
+          <!-- LIST -->
+          <list-of-date class="scrumboard-board-list list-wrapper ngx-dnd-item" 
+          ngxDraggable *ngFor="let list of listOfDate" 
+          [model]="list" [list]="list" [@animate]="{value:'*',params:{duration:'350ms',x:'100%'}}">
+          </list-of-date>
+          <!-- / LIST -->
+      
+          <!-- NEW LIST BUTTON-->
+          <add-list-of-date class="new-list-wrapper" (onListAdd)="addListOfDate($event)" ngxDraggable [moves]="false"
+            [@animate]="{value:'*',params:{duration:'350ms',x:'100%'}}">
+          </add-list-of-date>
+          <!-- / NEW LIST BUTTON-->
+      
+        </div>
+        <!-- / BOARD -->
+      </div>
+      <!-- / CONTENT TOOLBAR -->
+    </div>
+     <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

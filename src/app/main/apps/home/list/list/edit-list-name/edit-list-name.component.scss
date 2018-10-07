@@ -1,0 +1,16 @@
+:host {
+    .list-header-name {
+        font-family: Arial, Helvetica, sans-serif;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+}
+
+.list-header-name-form {
+    mat-form-field {
+        width: 175px;
+    }
+}

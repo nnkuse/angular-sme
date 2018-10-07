@@ -1,0 +1,25 @@
+<div class="list mat-elevation-z1" fxLayout="column">
+
+    <!-- LIST HEADER -->
+    <div class="list-header" fxFlex fxLayout="row" fxLayoutAlign="start center">
+
+        <edit-list-of-date
+            fxFlex="1 0 auto"
+            [list]="list"
+            (onNameChanged)="onListNameChanged($event)">
+        </edit-list-of-date>
+
+        <div fxFlex="0 1 auto">
+            <button mat-icon-button class="list-header-option-button" [matMenuTriggerFor]="listMenu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #listMenu="matMenu">
+                <button mat-menu-item (click)="editList()">แก้ไข</button>
+                <button mat-menu-item (click)="removeListOfDate(list.id)">ลบ</button>
+            </mat-menu>
+        </div>
+
+    </div>
+    <!-- / LIST HEADER -->
+
+</div>

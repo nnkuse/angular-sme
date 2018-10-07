@@ -1,0 +1,119 @@
+<div id="lists" class="page-layout carded fullwidth">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header mat-accent-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+      fxLayoutAlign.gt-xs="space-between center">
+
+      <!-- APP TITLE -->
+      <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+          assignment
+        </mat-icon>
+        <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          SME
+        </span>
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- SEARCH -->
+      <div class="search-input-wrapper mx-24 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+        <label for="search" class="mr-8">
+          <mat-icon class="secondary-text">search</mat-icon>
+        </label>
+        <mat-form-field floatLabel="never" fxFlex="1 0 auto">
+          <input id="search" matInput #filter placeholder="ค้นหา">
+        </mat-form-field>
+      </div>
+      <!-- / SEARCH -->
+
+      <button mat-fab class="mat-pink-bg" [routerLink]="'/apps/sme/lists'" matTooltip="เพิ่มรายการ" matTooltipPosition="above"
+        (click)="addNew()">
+        <mat-icon>add</mat-icon>
+      </button>
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg">
+
+      <mat-table class="lists-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
+        fusePerfectScrollbar>
+
+        <!-- List name Column -->
+        <ng-container matColumnDef="list_name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>รายการ</mat-header-cell>
+          <mat-cell *matCellDef="let list">
+            <p class="text-truncate">
+              {{list.list_name}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Agency Column -->
+        <ng-container matColumnDef="agency">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>หน่วยงานที่ขอ</mat-header-cell>
+          <mat-cell *matCellDef="let list">
+            <p class="text-truncate">
+              {{list.agency}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Start date Column -->
+        <ng-container matColumnDef="start_date">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>ตั้งแต่วันที่</mat-header-cell>
+          <mat-cell *matCellDef="let list">
+            <p class="text-truncate">
+              {{list.start_date | date:'dd/MM/yyyy'}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- End date Column -->
+        <ng-container matColumnDef="end_date">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>ถึงวันที่</mat-header-cell>
+          <mat-cell *matCellDef="let list">
+            <p class="text-truncate">
+              {{list.end_date | date:'dd/MM/yyyy'}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Net income Column -->
+        <ng-container matColumnDef="net_income">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>รายได้สุทธิ</mat-header-cell>
+          <mat-cell class="net_income" *matCellDef="let list">
+            <p class="text-truncate">
+              {{list.net_income | currency:'฿ ':'symbol'}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+        <mat-row title="{{list.list_name}}  {{list.agency}}" *matRowDef="let list; columns: displayedColumns;" class="list"
+          matRipple [routerLink]="'/apps/sme/lists/'+list.id">
+        </mat-row>
+
+      </mat-table>
+      <mat-paginator #paginator 
+      [length]="dataSource.filteredData.length" 
+      [pageIndex]="0" 
+      [pageSize]="10" 
+      [pageSizeOptions]="[5, 10, 25, 100]" 
+      showFirstLastButtons>
+      </mat-paginator>
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>
