@@ -1,10 +1,8 @@
 @import "src/@fuse/scss/fuse";
 .scrumboard-board-list {
-    width: 344px;
+    width: 33.25%;
     min-width: 344px;
-    max-width: 344px;
-    padding-bottom: 24px;
-    padding-right: 24px !important;
+    padding: inherit;
     .list {
         max-height: 80px;
         background-color: #EEF0F2;

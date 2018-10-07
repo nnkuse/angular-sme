@@ -1,4 +1,4 @@
-<div id="list" class="page-layout carded fullwidth inner-scroll">
+<div id="list" class="page-layout carded fullwidth">
 
   <!-- TOP BACKGROUND -->
   <div class="top-bg mat-accent-bg"></div>
@@ -31,7 +31,8 @@
       <!-- BUTTON -->
       <div class="button-event" fxLayout="row" fxLayoutAlign="space-between center">
 
-        <button mat-mini-fab class="mat-green-600-bg" matTooltip="แก้ไขรายการ" matTooltipPosition="above" (click)="editList()">
+        <button mat-mini-fab class="mat-green-600-bg" matTooltip="แก้ไขรายการ" matTooltipPosition="above" 
+          (click)="editList()">
           <mat-icon>edit</mat-icon>
         </button>
 
@@ -56,7 +57,7 @@
         
           <!-- LIST -->
           <list-of-date class="scrumboard-board-list list-wrapper ngx-dnd-item" 
-          ngxDraggable *ngFor="let list of listOfDate" 
+          ngxDraggable *ngFor="let list of listOfDate" [moves]="false" 
           [model]="list" [list]="list" [@animate]="{value:'*',params:{duration:'350ms',x:'100%'}}">
           </list-of-date>
           <!-- / LIST -->

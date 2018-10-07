@@ -37,7 +37,7 @@
                  bottom: 0;
                  left: 0;
                  height: 100%;
-                 overflow-y: hidden;
+                //  overflow-y: hidden;
                  overflow-x: auto;
                  -webkit-overflow-scrolling: touch;
                  .list-sortable-placeholder {
@@ -45,10 +45,9 @@
                      margin-right: 24px;
                  }
                  .new-list-wrapper {
-                     width: 344px;
-                     min-width: 344px;
-                     max-width: 344px;
-                     padding-right: 24px;
+                    width: 33.25%;
+                    min-width: 344px;
+                    padding: inherit;
                  }
              }
          }

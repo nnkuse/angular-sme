@@ -82,7 +82,7 @@ export class EditListOfDateComponent
         {
             this.list.in_date = moment(this.form.getRawValue().in_date).format('YYYY-MM-DD');
             // this.onNameChanged.next(this.list.in_date);
-            console.log(this.list.in_date, this.list.id);
+            // console.log(this.list.in_date, this.list.id);
             this._listService.editListOfDate(this.list.id, this.list.in_date);
             this.formActive = false;
         }

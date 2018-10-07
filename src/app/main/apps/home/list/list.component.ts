@@ -8,6 +8,9 @@ import { fuseAnimations } from '@fuse/animations';
 import { ListService } from './list.service';
 import { Lists } from './../models/lists';
 import { ListOfDate } from './../models/listOfDate';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { EditDialogComponent } from './edit-list/edit.dialog.component';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-list',
@@ -22,12 +25,16 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewChecked {
   pageType: string;
   listForm: FormGroup;
 
+  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+
   // Private
   private _unsubscribeAll: Subject<any>;
 
   constructor(
     private _listService: ListService,
     private _changeDetectorRefs: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private _matDialog: MatDialog,
   ) {
     // Set the default
     this.list = new Lists();
@@ -68,11 +75,27 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   editList(): void {
-
+    this.dialog.open(EditDialogComponent, {
+      data: { list: this.list }
+    }).afterClosed().subscribe(result => {
+      if (result === 1) {
+        this._changeDetectorRefs.detectChanges();
+      }
+    })
   }
 
   removeList(): void {
-    this._listService.removeList();
+    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+      disableClose: false
+    });
+
+    this.confirmDialogRef.componentInstance.confirmMessage = 'ต้องการลบ ' + this.list.list_name + ' ?';
+
+    this.confirmDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this._listService.removeList();
+      }
+    });
   }
 
   onDrop(ev): void {

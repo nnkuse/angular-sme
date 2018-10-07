@@ -1,7 +1,5 @@
 import { FuseMaterialColorPickerModule } from '@fuse/components/material-color-picker/material-color-picker.module';
-import { FuseConfirmDialogModule } from './../../../../@fuse/components/confirm-dialog/confirm-dialog.module';
-import { DeleteDialogComponent } from './lists/dialogs/delete/delete.dialog.component';
-import { EditDialogComponent } from './lists/dialogs/edit/edit.dialog.component';
+import { FuseConfirmDialogModule } from './../../../../@fuse/components/confirm-dialog/confirm-dialog.module';;
 import { AddDialogComponent } from './lists/dialogs/add/add.dialog.component';
 import { MaterialModule } from '../../../material.module';
 import { NgModule } from '@angular/core';
@@ -15,9 +13,10 @@ import { ListComponent } from './list/list.component';
 import { ListsComponent } from './lists/lists.component';
 import { ListsService } from './lists/lists.service';
 import { ListService } from './list/list.service';
-import { AddListOfDateComponent } from './list/add-list/add-list.component';
-import { ListOfDateComponent } from './list/list/list-of-date.component';
-import { EditListOfDateComponent } from './list/list/edit-list-name/edit-list-name.component';
+import { ListOfDateComponent } from './list/list-of-date/list-of-date.component';
+import { EditListOfDateComponent } from './list/list-of-date/edit-list-name/edit-list-name.component';
+import { AddListOfDateComponent } from './list/add-list-of-date/add-list.component';
+import { EditDialogComponent } from './list/edit-list/edit.dialog.component';
 
 const routes: Routes = [
     {
@@ -50,8 +49,7 @@ const routes: Routes = [
 
         ListsComponent,
         AddDialogComponent,
-        EditDialogComponent,
-        DeleteDialogComponent,
+        EditDialogComponent
 
     ],
     imports: [
@@ -71,8 +69,7 @@ const routes: Routes = [
     ],
     entryComponents: [
         AddDialogComponent,
-        EditDialogComponent,
-        DeleteDialogComponent
+        EditDialogComponent
     ],
 })
 

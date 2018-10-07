@@ -1,0 +1,61 @@
+<div class="container add-dialog">
+  <h3 mat-dialog-title>แก้ไขรายการ</h3>
+
+  <form (ngSubmit)="submit" name="listForm" #formControl="ngForm" [formGroup]="listForm">
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" 
+        formControlName="list_name" 
+        placeholder="รายการ" 
+        name="list_name" 
+        required>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" 
+        formControlName="agency" 
+        placeholder="ชื่อหน่วยงาน" 
+        name="agency" 
+        required>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-picker-container">
+      <div class="form-picker1">
+        <mat-form-field>
+          <input matInput #input class="form-control" 
+          formControlName="start_date" 
+          [matDatepicker]="picker1" 
+          placeholder="ตั้งแต่วันที่" 
+          name="start_date" required>
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-picker2">
+        <mat-form-field>
+          <input matInput #input class="form-control" 
+          formControlName="end_date" 
+          [matDatepicker]="picker2" 
+          placeholder="ถึงวันที่" 
+          name="end_date" required>
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div mat-dialog-actions>
+      <button mat-button [type]="submit" [disabled]="!formControl.valid" (click)="confirmEdit()">แก้ไข</button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">ยกเลิก</button>
+    </div>
+  </form>
+</div>

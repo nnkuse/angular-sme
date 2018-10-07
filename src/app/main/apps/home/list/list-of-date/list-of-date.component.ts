@@ -37,13 +37,6 @@ export class ListOfDateComponent implements OnInit, OnDestroy {
     // Private
     private _unsubscribeAll: Subject<any>;
 
-    /**
-     * Constructor
-     *
-     * @param {ActivatedRoute} _activatedRoute
-     * @param {ScrumboardService} _scrumboardService
-     * @param {MatDialog} _matDialog
-     */
     constructor(
         private _activatedRoute: ActivatedRoute,
         private _listService: ListService,

@@ -6,6 +6,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Router } from '@a
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Location } from '@angular/common';
 import * as moment from 'moment';
+import { Lists } from '../models/lists';
 
 @Injectable()
 export class ListService implements Resolve<any>
@@ -34,13 +35,6 @@ export class ListService implements Resolve<any>
     this.onListOfDateChanged = new BehaviorSubject({});
   }
 
-  /**
-   * Resolver
-   *
-   * @param {ActivatedRouteSnapshot} route
-   * @param {RouterStateSnapshot} state
-   * @returns {Observable<any> | Promise<any> | any}
-   */
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
     this.routeParams = route.params;
 
@@ -74,6 +68,23 @@ export class ListService implements Resolve<any>
     });
   }
 
+  editList(data: Lists): Promise<any> {
+    const body = {
+      list_name: data.list_name,
+      agency: data.agency,
+      start_date: moment(data.start_date).format('YYYY-MM-DD'),
+      end_date: moment(data.end_date).format('YYYY-MM-DD')
+    };
+    return new Promise((resolve, reject) => {
+      this._httpClient.put<any>(`${environment.api_url}/listitems/` + this.routeParams.id, body)
+      .subscribe(() => {
+        resolve();
+      }, reject);
+    }).then(() => {
+      this.updateListOfDate();
+    });
+  }
+
   getListOfDate(): Promise<any> {
     return new Promise((resolve, reject) => {
       this._httpClient.get<any>(`${environment.api_url}/listitems/` + this.routeParams.id + '/listofdates')
@@ -89,6 +100,7 @@ export class ListService implements Resolve<any>
     return new Promise((resolve, reject) => {
       this._httpClient.delete(`${environment.api_url}/listitems/` + this.routeParams.id)
       .subscribe(res => {
+        // console.log(res);
         this._router.navigate(['/apps/sme/lists']);
       });
     });
@@ -103,6 +115,7 @@ export class ListService implements Resolve<any>
     return new Promise((resolve, reject) => {
       this._httpClient.post<any>(`${environment.api_url}/listitems/` + this.routeParams.id + '/listofdates', body)
         .subscribe((response: any) => {
+          console.log(response);
           resolve(response);
         }, reject);
     }).then(() => {
@@ -114,16 +127,9 @@ export class ListService implements Resolve<any>
     const body = {
       in_date: inDate
     };
-    console.log(body);
     return new Promise((resolve, reject) => {
-      this._httpClient.put<any>(`${environment.api_url}/listitems/` + this.routeParams.id + '/listofdates/' + listOfDateID, body, 
-        {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/x-www-form-urlencoded'
-          })
-        })
+      this._httpClient.put<any>(`${environment.api_url}/listitems/` + this.routeParams.id + '/listofdates/' + listOfDateID, body)
       .subscribe(res => {
-        console.log(res);
         this.updateListOfDate();
       });
     });

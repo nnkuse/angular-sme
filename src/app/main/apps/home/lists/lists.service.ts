@@ -11,16 +11,12 @@ export class ListsService implements Resolve<Lists[]>
 {
   lists: any[];
   onListsChanged: BehaviorSubject<any>;
+  routeParams: any
 
   dataChange: BehaviorSubject<Lists[]> = new BehaviorSubject<Lists[]>([]);
   // Temporarily stores data from dialogs
-  dialogData: any;
+  dialogData: Lists;
 
-  /**
-   * Constructor
-   *
-   * @param {HttpClient} _httpClient
-   */
   constructor(
     private _httpClient: HttpClient
   ) {
@@ -28,14 +24,8 @@ export class ListsService implements Resolve<Lists[]>
     this.onListsChanged = new BehaviorSubject({});
   }
 
-  /**
-   * Resolver
-   *
-   * @param {ActivatedRouteSnapshot} route
-   * @param {RouterStateSnapshot} state
-   * @returns {Observable<any> | Promise<any> | any}
-   */
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Lists[]> | Promise<Lists[]> | any {
+
     return new Promise((resolve, reject) => {
       Promise.all([
         this.getLists()
@@ -47,7 +37,7 @@ export class ListsService implements Resolve<Lists[]>
       );
     });
   }
-  
+
   getLists(): Promise<any> {
     return new Promise((resolve, reject) => {
       this._httpClient.get<Lists[]>(`${environment.api_url}/listitems`)
@@ -74,14 +64,17 @@ export class ListsService implements Resolve<Lists[]>
           resolve(response);
         }, reject);
     }).then(() => {
-      return new Promise((resolve, reject) => {
-        Promise.all([
-          this.getLists()
-        ]).then(() => {
-            resolve();
-          }, reject);
-      });
+      this.updateListOfDate();
     });
   }
 
+  updateListOfDate(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      Promise.all([
+        this.getLists()
+      ]).then(() => {
+        resolve();
+      }, reject);
+    });
+  }
 }
