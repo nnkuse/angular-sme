@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -35,8 +35,8 @@ const appRoutes: Routes = [
         path: 'error',
         loadChildren: './main/not-found/not-found.module#NotFoundModule'
     },
-    { 
-        path: '', 
+    {
+        path: '',
         redirectTo: 'apps/sme/lists',
         pathMatch: 'full'
     },
@@ -44,14 +44,14 @@ const appRoutes: Routes = [
     //     path: '**',
     //     redirectTo: 'error/404',
     // },
-    
+
 ];
 
 @NgModule({
     declarations: [
         AppComponent
     ],
-    imports     : [
+    imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
@@ -76,9 +76,10 @@ const appRoutes: Routes = [
         // App modules
         LayoutModule,
         AppsModule
-        
+
     ],
     providers: [
+        { provide: MAT_DATE_LOCALE, useValue: 'th-TH' },
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true },
         { provide: ErrorHandler, useClass: ApplicationErrorHandle },

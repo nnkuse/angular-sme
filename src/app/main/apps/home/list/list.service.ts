@@ -115,7 +115,7 @@ export class ListService implements Resolve<any>
     return new Promise((resolve, reject) => {
       this._httpClient.post<any>(`${environment.api_url}/listitems/` + this.routeParams.id + '/listofdates', body)
         .subscribe((response: any) => {
-          console.log(response);
+          // console.log(response);
           resolve(response);
         }, reject);
     }).then(() => {
@@ -130,7 +130,8 @@ export class ListService implements Resolve<any>
     return new Promise((resolve, reject) => {
       this._httpClient.put<any>(`${environment.api_url}/listitems/` + this.routeParams.id + '/listofdates/' + listOfDateID, body)
       .subscribe(res => {
-        this.updateListOfDate();
+        resolve();
+        // this.updateListOfDate();
       });
     });
   }

@@ -12,9 +12,20 @@ export class EditListOfDateComponent
 {
     formActive: boolean;
     form: FormGroup;
+    _list: any;
+    date: any;
 
     @Input()
-    list;
+    public get list() {
+        return this._list;
+    }
+    public set list(value) {
+        this._list = value;
+        moment.locale('th');
+        this.date = moment(this._list.in_date)
+            .format('DD MMMM ' + `${moment(this._list.in_date).get('year')+543}`);
+        // console.log(this._list);
+    }
 
     // tslint:disable-next-line:no-output-on-prefix
     @Output()
@@ -81,8 +92,6 @@ export class EditListOfDateComponent
         if ( this.form.valid )
         {
             this.list.in_date = moment(this.form.getRawValue().in_date).format('YYYY-MM-DD');
-            // this.onNameChanged.next(this.list.in_date);
-            // console.log(this.list.in_date, this.list.id);
             this._listService.editListOfDate(this.list.id, this.list.in_date);
             this.formActive = false;
         }

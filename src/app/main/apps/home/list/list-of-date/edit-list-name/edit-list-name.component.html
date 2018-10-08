@@ -1,5 +1,5 @@
-<div fxFlex="1 0 auto" *ngIf="!formActive" class="list-header-name">
-    {{list.in_date}}
+<div fxFlex="1 0 auto" *ngIf="!formActive" class="list-header-name" [routerLink]="'/apps/sme/lists/'+_list.list_item_id+'/'+_list.in_date+'/'+_list.id">
+    {{date}}
 </div>
 
 <form [formGroup]="form" (ngSubmit)="onFormSubmit()"

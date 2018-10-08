@@ -43,6 +43,14 @@ export class ListsService implements Resolve<Lists[]>
       this._httpClient.get<Lists[]>(`${environment.api_url}/listitems`)
         .subscribe((response: any) => {
           this.lists = response.data;
+          moment.locale('th');
+          for (var _i = 0; _i < this.lists.length; _i++) {
+            this.lists[_i].start_date = moment(this.lists[_i].start_date)
+              .format('DD MMM ' + `${moment(this.lists[_i].start_date).get('year')+543}`);
+
+            this.lists[_i].end_date = moment(this.lists[_i].end_date)
+              .format('DD MMM ' + `${moment(this.lists[_i].end_date).get('year')+543}`);
+        }
           this.onListsChanged.next(this.lists);
           resolve(response);
         }, reject);

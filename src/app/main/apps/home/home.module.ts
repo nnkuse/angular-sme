@@ -17,6 +17,8 @@ import { ListOfDateComponent } from './list/list-of-date/list-of-date.component'
 import { EditListOfDateComponent } from './list/list-of-date/edit-list-name/edit-list-name.component';
 import { AddListOfDateComponent } from './list/add-list-of-date/add-list.component';
 import { EditDialogComponent } from './list/edit-list/edit.dialog.component';
+import { ListDetailService } from './list/list-detail/list-detail.service';
+import { ListDetailComponent } from './list/list-detail/compact/compact.component';
 
 const routes: Routes = [
     {
@@ -31,6 +33,13 @@ const routes: Routes = [
         component: ListComponent,
         resolve: {
             data: ListService
+        }
+    },
+    {
+        path: 'lists/:list_item_id/:in_date/:id',
+        component: ListDetailComponent,
+        resolve: {
+            data: ListDetailService
         }
     },
     {
@@ -49,7 +58,9 @@ const routes: Routes = [
 
         ListsComponent,
         AddDialogComponent,
-        EditDialogComponent
+        EditDialogComponent,
+
+        ListDetailComponent
 
     ],
     imports: [
@@ -65,7 +76,8 @@ const routes: Routes = [
     ],
     providers: [
         ListsService,
-        ListService
+        ListService,
+        ListDetailService
     ],
     entryComponents: [
         AddDialogComponent,
