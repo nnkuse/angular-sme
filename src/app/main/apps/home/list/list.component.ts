@@ -81,7 +81,7 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewChecked {
       if (result === 1) {
         this._changeDetectorRefs.detectChanges();
       }
-    })
+    });
   }
 
   removeList(): void {

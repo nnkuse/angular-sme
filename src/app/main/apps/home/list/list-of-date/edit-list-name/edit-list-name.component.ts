@@ -16,14 +16,14 @@ export class EditListOfDateComponent
     date: any;
 
     @Input()
-    public get list() {
+    public get list(): any {
         return this._list;
     }
     public set list(value) {
         this._list = value;
         moment.locale('th');
         this.date = moment(this._list.in_date)
-            .format('DD MMMM ' + `${moment(this._list.in_date).get('year')+543}`);
+            .format('DD MMMM ' + `${moment(this._list.in_date).get('year') + 543}`);
         // console.log(this._list);
     }
 

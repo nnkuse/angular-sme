@@ -1,0 +1,44 @@
+<div class="container add-dialog">
+  <h3 mat-dialog-title *ngIf="data.state == 'new'">เพิ่มรายการ</h3>
+  <h3 mat-dialog-title *ngIf="data.state == 'edit'">อัพเดทรายการ</h3>
+
+  <form (ngSubmit)="submit" #formControl="ngForm">
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" placeholder="รายการ" [(ngModel)]="data.detail.list_detail_name" name="list_detail_name"
+          required>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" type="number" placeholder="รายรับ" [(ngModel)]="data.detail.in_come" name="in_come"
+          required>
+        <span matPrefix>฿&nbsp;</span>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput #input class="form-control" type="number" placeholder="รายจ่าย" [(ngModel)]="data.detail.expense" name="expense"
+          required>
+        <span matPrefix>฿&nbsp;</span>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions fxLayoutAlign="space-between">
+      <div>
+        <button mat-button [type]="submit" *ngIf="data.state == 'new'" [disabled]="!formControl.valid" (click)="confirmAdd()">เพิ่ม</button>
+        <button mat-button [type]="submit" *ngIf="data.state == 'edit'" [disabled]="!formControl.valid" (click)="edit()">อัพเดท</button>
+        <button mat-button (click)="onNoClick()" tabindex="-1">ยกเลิก</button>
+      </div>
+      <div>
+        <button mat-button [type]="submit" *ngIf="data.state == 'edit'" (click)="delete()" color="warn">ลบ</button>
+      </div>
+    </div>
+  </form>
+</div>

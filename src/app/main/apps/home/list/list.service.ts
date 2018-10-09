@@ -109,7 +109,6 @@ export class ListService implements Resolve<any>
   addListOfDate(newList): Promise<any> {
     this.listOfDate = newList;
     const body = {
-      list_item_id: this.routeParams.id,
       in_date: moment(this.listOfDate).format('YYYY-MM-DD')
     };
     return new Promise((resolve, reject) => {
@@ -127,12 +126,14 @@ export class ListService implements Resolve<any>
     const body = {
       in_date: inDate
     };
+    // console.log(body);
     return new Promise((resolve, reject) => {
       this._httpClient.put<any>(`${environment.api_url}/listitems/` + this.routeParams.id + '/listofdates/' + listOfDateID, body)
       .subscribe(res => {
         resolve();
-        // this.updateListOfDate();
-      });
+      }, reject);
+    }).then(() => {
+      this.updateListOfDate();
     });
   }
 

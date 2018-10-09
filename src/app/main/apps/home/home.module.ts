@@ -1,5 +1,5 @@
 import { FuseMaterialColorPickerModule } from '@fuse/components/material-color-picker/material-color-picker.module';
-import { FuseConfirmDialogModule } from './../../../../@fuse/components/confirm-dialog/confirm-dialog.module';;
+import { FuseConfirmDialogModule } from './../../../../@fuse/components/confirm-dialog/confirm-dialog.module';
 import { AddDialogComponent } from './lists/dialogs/add/add.dialog.component';
 import { MaterialModule } from '../../../material.module';
 import { NgModule } from '@angular/core';
@@ -19,6 +19,7 @@ import { AddListOfDateComponent } from './list/add-list-of-date/add-list.compone
 import { EditDialogComponent } from './list/edit-list/edit.dialog.component';
 import { ListDetailService } from './list/list-detail/list-detail.service';
 import { ListDetailComponent } from './list/list-detail/compact/compact.component';
+import { AddDetailDialogComponent } from './list/list-detail/dialogs/add/add.dialog.component';
 
 const routes: Routes = [
     {
@@ -60,7 +61,8 @@ const routes: Routes = [
         AddDialogComponent,
         EditDialogComponent,
 
-        ListDetailComponent
+        ListDetailComponent,
+        AddDetailDialogComponent
 
     ],
     imports: [
@@ -81,7 +83,10 @@ const routes: Routes = [
     ],
     entryComponents: [
         AddDialogComponent,
-        EditDialogComponent
+        EditDialogComponent,
+
+        // detail add
+        AddDetailDialogComponent
     ],
 })
 

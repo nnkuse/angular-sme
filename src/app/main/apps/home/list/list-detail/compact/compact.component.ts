@@ -1,23 +1,35 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Input, ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ListDetailService } from '../list-detail.service';
+import { fuseAnimations } from '@fuse/animations';
+import { ListDetail } from '../../../models/listDetail';
+import { AddDetailDialogComponent } from '../dialogs/add/add.dialog.component';
+import * as moment from 'moment';
 
 
 @Component({
-    selector   : 'invoice-compact',
+    selector: 'list-detail-compact',
     templateUrl: './compact.component.html',
-    styleUrls  : ['./compact.component.scss']
+    styleUrls  : ['./compact.component.scss'],
+    // encapsulation: ViewEncapsulation.None,
+    animations: fuseAnimations
 })
 export class ListDetailComponent implements OnInit, OnDestroy
 {
-    invoice: any;
+    listDetail: any;
+    listItemID: number;
+    listDetailInDate: any;
+    editDetail: ListDetail;
 
     // Private
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private _listDetailService: ListDetailService
+        private _listDetailService: ListDetailService,
+        public dialog: MatDialog,
+        private _changeDetectorRefs: ChangeDetectorRef
     )
     {
         // Set the private defaults
@@ -35,8 +47,13 @@ export class ListDetailComponent implements OnInit, OnDestroy
     {
         this._listDetailService.detailOnChanged
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((invoice) => {
-                this.invoice = invoice;
+            .subscribe((listDetail) => {
+                this.listDetail = listDetail;
+                // console.log(this.listDetail);
+                this.listItemID = listDetail.list_item_id;
+                moment.locale('th');
+                this.listDetailInDate = moment(listDetail.in_date)
+                    .format('DD MMMM ' + `${moment(listDetail.in_date).get('year') + 543}`);
             });
     }
 
@@ -48,5 +65,28 @@ export class ListDetailComponent implements OnInit, OnDestroy
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
+    }
+
+    addNew(state: string, detail: ListDetail): void {
+        detail.in_come = detail.expense = '0';
+        this.editDetail = new ListDetail(detail);
+        this.dialog.open(AddDetailDialogComponent, {
+            data: { state: state, detail: detail }
+        }).afterClosed().subscribe(result => {
+            if (result === 1) {
+                this._changeDetectorRefs.detectChanges();
+            }
+        });
+    }
+
+    editOrDelete(state: string, detail: ListDetail): void {
+        this.editDetail = new ListDetail(detail);
+        this.dialog.open(AddDetailDialogComponent, {
+            data: { state: state, detail: this.editDetail }
+        }).afterClosed().subscribe(result => {
+            if (result === 1) {
+                this._changeDetectorRefs.detectChanges();
+            }
+        });
     }
 }
