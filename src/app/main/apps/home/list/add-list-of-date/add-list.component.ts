@@ -52,6 +52,7 @@ export class AddListOfDateComponent
      */
     onFormSubmit(): void {
         if (this.form.valid) {
+            // console.log(this.form.getRawValue().in_date);
             this.onListAdd.next(this.form.getRawValue().in_date);
             this.formActive = false;
         }

@@ -4,6 +4,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { ListDetail } from '../../models/listDetail';
+import { ApiUrl } from '../../../../../services/api';
 
 @Injectable()
 export class ListDetailService implements Resolve<any>
@@ -37,7 +38,7 @@ export class ListDetailService implements Resolve<any>
     getListDetail(): Promise<any[]> {
         // console.log(this.routeParams.list_item_id, this.routeParams.id);
         return new Promise((resolve, reject) => {
-            this._httpClient.get<any>(`${environment.api_url}/listitems/` 
+            this._httpClient.get<any>(`${ApiUrl.api_url}/listitems/` 
                 + this.routeParams.list_item_id + '/listofdates/' + this.routeParams.id + '/listdetails')
                 .subscribe((resDetail: any) => {
                     this.detail = resDetail.data;
@@ -56,7 +57,7 @@ export class ListDetailService implements Resolve<any>
         };
         console.log(data.detail);
         return new Promise((resolve, reject) => {
-            this._httpClient.post<any>(`${environment.api_url}/listitems/`
+            this._httpClient.post<any>(`${ApiUrl.api_url}/listitems/`
                 + this.routeParams.list_item_id + '/listofdates/' + this.routeParams.id + '/listdetails', body)
                 .subscribe((response: any) => {
                     console.log(response);
@@ -74,10 +75,12 @@ export class ListDetailService implements Resolve<any>
             expense: data.detail.expense
         };
         // console.log(this.routeParams.list_item_id, this.routeParams.id, data.detail.id);
+        // console.log(body);
         return new Promise((resolve, reject) => {
-            this._httpClient.put<any>(`${environment.api_url}/listitems/`
+            this._httpClient.put<any>(`${ApiUrl.api_url}/listitems/`
                 + this.routeParams.list_item_id + '/listofdates/' + this.routeParams.id + '/listdetails/' + data.detail.id, body)
                 .subscribe((response: any) => {
+                    // console.log(response);
                     resolve();
                 }, reject);
         }).then(() => {
@@ -88,7 +91,7 @@ export class ListDetailService implements Resolve<any>
     removeDetail(data): Promise<any> {
         console.log(this.routeParams.list_item_id, this.routeParams.id, data.detail.id);
         return new Promise((resolve, reject) => {
-            this._httpClient.delete<any>(`${environment.api_url}/listitems/`
+            this._httpClient.delete<any>(`${ApiUrl.api_url}/listitems/`
                 + this.routeParams.list_item_id + '/listofdates/' + this.routeParams.id + '/listdetails/' + data.detail.id)
                 .subscribe((response: any) => {
                     console.log(response);

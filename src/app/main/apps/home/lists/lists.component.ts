@@ -19,6 +19,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ListsComponent implements OnInit, AfterViewChecked {
 
+  lists: Lists;
+
   dataSource: FilesDataSource | null;
   displayedColumns = ['list_name', 'agency', 'start_date', 'end_date', 'net_income'];
 
@@ -52,9 +54,10 @@ export class ListsComponent implements OnInit, AfterViewChecked {
     this._changeDetectorRefs.detectChanges();
   }
 
-  addNew(lists: Lists): void {
+  addNew(): void {
+    this.lists = new Lists();
     this.dialog.open(AddDialogComponent, {
-      data: { lists: lists }
+      data: { lists: this.lists }
     }).afterClosed().subscribe(result => {
       if (result === 1) {
         this.loadData();

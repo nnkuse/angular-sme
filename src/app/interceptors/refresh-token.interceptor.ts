@@ -1,3 +1,4 @@
+import { ApiUrl } from './../services/api';
 import { Injectable, Injector } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse, HttpClient} from '@angular/common/http';
 
@@ -18,7 +19,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
       if (errorResponse.status === 401 && error.error === 'token_expired') {
         const http = this.injector.get(HttpClient);
 
-        return http.post<any>(`${environment.api_url}/auth/refresh`, {})
+        return http.post<any>(`${ApiUrl.api_url}/auth/refresh`, {})
           .flatMap(data => {
             localStorage.setItem('token', data.token);
             const cloneRequest = request.clone({ setHeaders: { 'Authorization': `Bearer ${data.token}` } });

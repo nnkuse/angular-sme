@@ -45,6 +45,7 @@ export class AddDetailDialogComponent {
   }
 
   edit(): void {
+    // console.log(this.data);
     this._listDetailService.editDetail(this.data).then(() => {
       this.dialogRef.close(1);
     });

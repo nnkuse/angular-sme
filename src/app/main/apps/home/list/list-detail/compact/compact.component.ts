@@ -67,11 +67,11 @@ export class ListDetailComponent implements OnInit, OnDestroy
         this._unsubscribeAll.complete();
     }
 
-    addNew(state: string, detail: ListDetail): void {
-        detail.in_come = detail.expense = '0';
-        this.editDetail = new ListDetail(detail);
+    addNew(state: string): void {
+        this.editDetail = new ListDetail();
+        this.editDetail.in_come = this.editDetail.expense = '0.00';
         this.dialog.open(AddDetailDialogComponent, {
-            data: { state: state, detail: detail }
+            data: { state: state, detail: this.editDetail }
         }).afterClosed().subscribe(result => {
             if (result === 1) {
                 this._changeDetectorRefs.detectChanges();

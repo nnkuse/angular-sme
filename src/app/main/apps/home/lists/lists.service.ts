@@ -1,3 +1,4 @@
+import { ApiUrl } from './../../../../services/api';
 import { environment } from 'environments/environment';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
@@ -11,7 +12,7 @@ export class ListsService implements Resolve<Lists[]>
 {
   lists: any[];
   onListsChanged: BehaviorSubject<any>;
-  routeParams: any
+  routeParams: any;
 
   dataChange: BehaviorSubject<Lists[]> = new BehaviorSubject<Lists[]>([]);
   // Temporarily stores data from dialogs
@@ -40,16 +41,16 @@ export class ListsService implements Resolve<Lists[]>
 
   getLists(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<Lists[]>(`${environment.api_url}/listitems`)
+      this._httpClient.get<Lists[]>(`${ApiUrl.api_url}/listitems`)
         .subscribe((response: any) => {
           this.lists = response.data;
           moment.locale('th');
-          for (var _i = 0; _i < this.lists.length; _i++) {
+          for (let _i = 0; _i < this.lists.length; _i++) {
             this.lists[_i].start_date = moment(this.lists[_i].start_date)
-              .format('DD MMM ' + `${moment(this.lists[_i].start_date).get('year')+543}`);
+              .format('DD MMM ' + `${moment(this.lists[_i].start_date).get('year') + 543}`);
 
             this.lists[_i].end_date = moment(this.lists[_i].end_date)
-              .format('DD MMM ' + `${moment(this.lists[_i].end_date).get('year')+543}`);
+              .format('DD MMM ' + `${moment(this.lists[_i].end_date).get('year') + 543}`);
         }
           this.onListsChanged.next(this.lists);
           resolve(response);
@@ -67,7 +68,7 @@ export class ListsService implements Resolve<Lists[]>
       end_date: moment(this.dialogData.end_date).format('YYYY-MM-DD')
     };
     return new Promise((resolve, reject) => {
-      this._httpClient.post<any>(`${environment.api_url}/listitems`, body)
+      this._httpClient.post<any>(`${ApiUrl.api_url}/listitems`, body)
         .subscribe((response: any) => {
           resolve(response);
         }, reject);

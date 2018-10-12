@@ -1,3 +1,4 @@
+import { ApiUrl } from './api';
 import { Router } from '@angular/router';
 import { environment } from './../../environments/environment';
 import { Injectable, ErrorHandler } from '@angular/core';
@@ -25,7 +26,8 @@ export class AuthService {
   }
 
   doLogin(email: string, password: string): Observable<boolean> {
-    return this.http.post<any>(`${environment.api_url}/auth/login`, { email: email, password: password })
+    // console.log('test');
+    return this.http.post<any>(`${ApiUrl.api_url}/auth/login`, { email: email, password: password })
       .do(data => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('uid', btoa(JSON.stringify(data.user)));
@@ -33,7 +35,7 @@ export class AuthService {
   }
 
   doLogout(): void {
-    this.http.get<any>(`${environment.api_url}/auth/logout`).subscribe(
+    this.http.get<any>(`${ApiUrl.api_url}/auth/logout`).subscribe(
       res => {
         localStorage.clear();
         this.router.navigate(['/auth/login']);
@@ -42,7 +44,7 @@ export class AuthService {
   }
 
   setUser(): void {
-    this.http.get<any>(`${environment.api_url}/auth/me`)
+    this.http.get<any>(`${ApiUrl.api_url}/auth/me`)
     .subscribe(data => {
         localStorage.setItem('uid', btoa(JSON.stringify(data.user)));
       });

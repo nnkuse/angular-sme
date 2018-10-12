@@ -71,7 +71,8 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (newListName === '') {
       return;
     }
-    this._listService.addListOfDate(new ListOfDate({ in_date: newListName }));
+    // console.log(newListName);
+    this._listService.addListOfDate({ in_date: newListName });
   }
 
   editList(): void {

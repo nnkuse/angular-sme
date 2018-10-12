@@ -21,6 +21,8 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MaterialModule } from './material.module';
 import { MAT_DATE_LOCALE } from '@angular/material';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { config } from 'rxjs';
 
 const appRoutes: Routes = [
     {
@@ -40,10 +42,10 @@ const appRoutes: Routes = [
         redirectTo: 'apps/sme/lists',
         pathMatch: 'full'
     },
-    // {
-    //     path: '**',
-    //     redirectTo: 'error/404',
-    // },
+    {
+        path: '**',
+        redirectTo: 'error/404',
+    },
 
 ];
 
@@ -79,6 +81,7 @@ const appRoutes: Routes = [
 
     ],
     providers: [
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
         { provide: MAT_DATE_LOCALE, useValue: 'th-TH' },
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true },

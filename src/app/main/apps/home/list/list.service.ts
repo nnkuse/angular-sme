@@ -1,3 +1,4 @@
+import { ApiUrl } from './../../../../services/api';
 import { ListOfDate } from './../models/listOfDate';
 import { environment } from 'environments/environment';
 import { Injectable } from '@angular/core';
@@ -54,7 +55,7 @@ export class ListService implements Resolve<any>
 
   getList(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(`${environment.api_url}/listitems/` + this.routeParams.id)
+      this._httpClient.get<any>(`${ApiUrl.api_url}/listitems/` + this.routeParams.id)
         .subscribe((response: any) => {
           if (response === null) {
             resolve();
@@ -76,7 +77,7 @@ export class ListService implements Resolve<any>
       end_date: moment(data.end_date).format('YYYY-MM-DD')
     };
     return new Promise((resolve, reject) => {
-      this._httpClient.put<any>(`${environment.api_url}/listitems/` + this.routeParams.id, body)
+      this._httpClient.put<any>(`${ApiUrl.api_url}/listitems/` + this.routeParams.id, body)
       .subscribe(() => {
         resolve();
       }, reject);
@@ -87,7 +88,7 @@ export class ListService implements Resolve<any>
 
   getListOfDate(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get<any>(`${environment.api_url}/listitems/` + this.routeParams.id + '/listofdates')
+      this._httpClient.get<any>(`${ApiUrl.api_url}/listitems/` + this.routeParams.id + '/listofdates')
         .subscribe((response: any) => {
           this.listOfDate = response.data;
           this.onListOfDateChanged.next(this.listOfDate);
@@ -98,7 +99,7 @@ export class ListService implements Resolve<any>
 
   removeList(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._httpClient.delete(`${environment.api_url}/listitems/` + this.routeParams.id)
+      this._httpClient.delete(`${ApiUrl.api_url}/listitems/` + this.routeParams.id)
       .subscribe(res => {
         // console.log(res);
         this._router.navigate(['/apps/sme/lists']);
@@ -107,12 +108,14 @@ export class ListService implements Resolve<any>
   }
 
   addListOfDate(newList): Promise<any> {
-    this.listOfDate = newList;
+    // this.listOfDate = newList;
     const body = {
-      in_date: moment(this.listOfDate).format('YYYY-MM-DD')
+      in_date: moment(newList.in_date).format('YYYY-MM-DD')
     };
+
+    console.log(body);
     return new Promise((resolve, reject) => {
-      this._httpClient.post<any>(`${environment.api_url}/listitems/` + this.routeParams.id + '/listofdates', body)
+      this._httpClient.post<any>(`${ApiUrl.api_url}/listitems/` + this.routeParams.id + '/listofdates', body)
         .subscribe((response: any) => {
           // console.log(response);
           resolve(response);
@@ -128,7 +131,7 @@ export class ListService implements Resolve<any>
     };
     // console.log(body);
     return new Promise((resolve, reject) => {
-      this._httpClient.put<any>(`${environment.api_url}/listitems/` + this.routeParams.id + '/listofdates/' + listOfDateID, body)
+      this._httpClient.put<any>(`${ApiUrl.api_url}/listitems/` + this.routeParams.id + '/listofdates/' + listOfDateID, body)
       .subscribe(res => {
         resolve();
       }, reject);
@@ -138,7 +141,7 @@ export class ListService implements Resolve<any>
   }
 
   removeListOfDate(listOfDateID): void {
-    this._httpClient.delete(`${environment.api_url}/listitems/` + this.routeParams.id + '/listofdates/' + listOfDateID)
+    this._httpClient.delete(`${ApiUrl.api_url}/listitems/` + this.routeParams.id + '/listofdates/' + listOfDateID)
       .subscribe(res => {
         this.updateListOfDate();
       });
